@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: basic-kafka
+  labels:
+    app: basic-kafka
+spec:
+  containers:
+  - name: kafka 
+    image: bitnami/kafka:latest
+    ports:
+    - containerPort: 9092
+    env:
+    - name:KAFKA_ZOOKEEPER_CONNECT
+      value:zookeeper:2181
+    - name:ALLOW_PLAINTEXT_LISTENER
+      value:yes
+  - name: zoopkeeper
+    image: bitnami/zookeeper:latest
+    ports:
+    - containerport: 2181
+    env:
+    - name:ALLOW_ANONYMOUS_LOGIN
+      value:yes
