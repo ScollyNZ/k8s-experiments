@@ -18,3 +18,23 @@ spec:
     env:
     - name: ALLOW_ANONYMOUS_LOGIN
       value: "yes"
+  - name: kafka-manager
+    image: hlebalbau/kafka-manager:latest
+    ports:
+     - containerPort: 9000
+    env:
+    - name: ZK_HOSTS
+      value: "localhost:2181"
+    - name: APPLICATION_SECRET
+      value: "letmein"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-manager
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 9000
